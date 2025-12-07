@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After School Activities</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1 v-text="sitename"></h1>
+            <button>
+                <p>CheckOut: {{ cartItemCount }}</p>
+            </button>
+        </header>
+
+        <div>
+            <input 
+                type="text" 
+                v-model="searchQuery" 
+                placeholder="Search activities..." 
+            />
+        
+            <select v-model="sortOption">
+                <option value="default">Default</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="a-z">A-Z</option>
+                <option value="z-a">Z-A</option>
+            </select>
+        </div>
+        
+        <div class="activities-container">
+            <div v-for="activity in filteredActivities()" :key="activity.id" class="activity">
+                <h2 v-text="activity.title"></h2>
+                <p>Location: {{ activity.location }}</p>
+                <p>Day: {{ activity.day }}</p>
+                <p>Price: {{ activity.price }}</p>
+                <p>Available Stock: {{ activity.availableInventory }}</p>
+                <button 
+                    type="submit" 
+                    v-on:click="addToCart(activity)" 
+                    v-if="canAddToCart(activity)">
+                    Add to Cart
+                </button>
+                <button disabled="disabled" type="submit" v-else>Can't Add to Cart</button>
+            
+                <span v-if="activity.availableInventory === cartCount(activity.id)">All Out!</span>
+                <span v-else-if="activity.availableInventory - cartCount(activity.id) < 5">
+                    Only {{ activity.availableInventory - cartCount(activity.id) }} left!
+                </span>
+                <span v-else>Buy Now!</span>
+            
+                <img :src="activity.image" :alt="`Image of ${activity.title}`" class="activity-image">
+            </div>
+        </div>
+
+        <div>
+            <p>
+            <label for="firstname">First Name:</label>
+            <input id="firstname" v-model.trim="order.firstName">
+            </p>
+
+            <p>
+            <label for="lastname">Last Name:</label>
+            <input id="lastname" v-model.trim="order.lastName"/>
+            </p>
+
+            <p>
+            <label for="telephone">Telephone:</label>
+            <input id="telephone" v-model.trim="order.telephone"/>
+            </p>
+
+            <p>
+            <label for="address">Address:</label>
+            <input id="address" v-model="order.address"/>
+            </p>
+
+            <p>
+            <label for="city">City:</label>
+            <input id="city" v-model="order.city"/>
+            </p>
+
+            <p>
+            <label for="email">Email:</label>
+            <input id="email" v-model="order.email"/>
+            </p>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+</body>
+</html>
