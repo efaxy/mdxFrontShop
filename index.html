@@ -11,7 +11,7 @@
     <div id="app">
         <header>
             <h1 v-text="sitename"></h1>
-            <button>
+            <button v-on:click="toggleCheckout">
                 <p>CheckOut: {{ cartItemCount }}</p>
             </button>
         </header>
@@ -57,15 +57,16 @@
             </div>
         </div>
 
-        <div>
+        <div v-show="showCheckout">
+            <h2>Checkout</h2>
             <p>
-            <label for="firstname">First Name:</label>
-            <input id="firstname" v-model.trim="order.firstName">
+            <label for="fullName">Full Name:</label>
+            <input id="fullName" v-model.trim="order.fullName">
             </p>
 
             <p>
-            <label for="lastname">Last Name:</label>
-            <input id="lastname" v-model.trim="order.lastName"/>
+            <label for="email">Gmail (Email):</label>
+            <input id="email" v-model="order.email"/>
             </p>
 
             <p>
@@ -74,8 +75,8 @@
             </p>
 
             <p>
-            <label for="address">Address:</label>
-            <input id="address" v-model="order.address"/>
+            <label for="country">Country:</label>
+            <input id="country" v-model="order.country"/>
             </p>
 
             <p>
@@ -84,8 +85,14 @@
             </p>
 
             <p>
-            <label for="email">Email:</label>
-            <input id="email" v-model="order.email"/>
+            <label for="address">Address:</label>
+            <input id="address" v-model="order.address"/>
+            </p>
+
+            <button v-on:click="submitOrder" :disabled="!isOrderValid">Submit</button>
+
+            <p v-if="!isOrderValid" style="color: red;">
+                Please fill in all fields and add items to the cart.
             </p>
         </div>
     </div>

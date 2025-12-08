@@ -4,12 +4,12 @@ let app = new Vue({
         sitename: 'After School Activities',
         activities: [],
         order: {
-            firstName: '',
-            lastName: '',
+            fullName: '',
+            email: '',
             telephone: '',
-            address: '',
+            country: '',
             city: '',
-            email: ''
+            address: ''
         },
         cart: [],
         searchQuery: '',
