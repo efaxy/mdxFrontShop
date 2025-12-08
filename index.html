@@ -49,7 +49,7 @@
                 <p>Location: {{ activity.location }}</p>
                 <p>Day: {{ activity.day }}</p>
                 <p>Price: {{ activity.price }}</p>
-                <p>Available Stock: {{ activity.availableInventory - cartCount(activity._id) }}</p>
+                <p>Available Stock: {{ activity.availableInventory }}</p>
                 <button 
                     type="submit" 
                     v-on:click="addToCart(activity)" 
@@ -61,11 +61,11 @@
                     v-on:click="removeFromCart(activity._id)">
                     Remove
                 </button>
-                <button disabled="disabled" type="submit" v-else-if="!canAddToCart(activity) && cartCount(activity._id) === 0">Can't Add to Cart</button>
+                <button disabled="disabled" type="submit" v-else-if="!canAddToCart(activity)">All Out!</button>
             
-                <span v-if="activity.availableInventory === cartCount(activity._id)">All Out!</span>
-                <span v-else-if="activity.availableInventory - cartCount(activity._id) < 5">
-                    Only {{ activity.availableInventory - cartCount(activity._id) }} left!
+                <span v-if="activity.availableInventory === 0">All Out!</span>
+                <span v-else-if="activity.availableInventory < 5">
+                    Only {{ activity.availableInventory }} left!
                 </span>
                 <span v-else>Buy Now!</span>
             
