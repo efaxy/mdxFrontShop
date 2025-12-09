@@ -84,14 +84,13 @@ let app = new Vue({
 			this.showCheckout = !this.showCheckout
 		},
 		submitOrder() {
-			// Create detailed cart items array with required fields
 			const detailedCart = this.cartDetails.map((item) => ({
-				lessonID: item._id, // Renamed for clarity, or keep as id if preferred
-				id: item._id, // Explicitly asked for 'id'
+				lessonID: item._id,
+				id: item._id,
 				title: item.title,
 				location: item.location,
 				price: item.price,
-				day: item.day, // Added day
+				day: item.day,
 				quantity: item.quantity,
 				totalPrice: item.price * item.quantity,
 			}))
@@ -113,7 +112,6 @@ let app = new Vue({
 					alert('Order submitted!')
 					this.cart = []
 					this.showCheckout = false
-					// Note: Inventory was already updated during addToCart, so no need to update it here.
 				})
 				.catch((error) => {
 					console.error('Error submitting order:', error)
@@ -122,8 +120,6 @@ let app = new Vue({
 		},
 		filteredActivities() {
 			let filtered = this.activities
-
-			// Client-side filtering removed in favor of backend search watcher
 
 			if (this.sortOption === 'price-asc') {
 				filtered.sort(
